@@ -1,0 +1,94 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+
+                <div class="card-body">
+                    <div class="card-title mb-4">
+                        <div class="d-flex justify-content-start row">
+                            <div class="image-container col-md-2">
+                                <img src="{{photoImg}}" id="imgProfile" style="width: 150px; height: 150px" class="img-thumbnail" />
+                            </div>
+                            <div class="userData ml-3 col-md-8">
+                                <h2 class="d-block" style="font-size: 1.5rem; font-weight: bold">{{photoTitle}}</h2>
+                                <br>
+                                <image-upload buttonCaption="SELECT IMAGE" (removed)="onRemoved($event)" (uploadFinished)="onUploadFinished($event)" [style]="customStyle"></image-upload>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="basicInfo-tab" data-toggle="tab" href="#basicInfo" role="tab" aria-controls="basicInfo" aria-selected="true">Basic Info</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="connectedServices-tab" data-toggle="tab" href="#connectedServices" role="tab" aria-controls="connectedServices" aria-selected="false">Location</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content ml-1" id="myTabContent">
+                                <div class="tab-pane fade show active" id="basicInfo" role="tabpanel" aria-labelledby="basicInfo-tab">
+                                    
+
+                                    <div class="row">
+                                        <div class="col-sm-3 col-md-2 col-5">
+                                            <label style="font-weight:bold;">Date</label>
+                                        </div>
+                                        <div class="col-md-8 col-6">
+                                            {{photoDateStr}}
+                                        </div>
+                                    </div>
+                                    <hr />
+
+                                    <div class="row">
+                                        <div class="col-sm-3 col-md-2 col-5">
+                                            <label style="font-weight:bold;">Time</label>
+                                        </div>
+                                        <div class="col-md-8 col-6">
+                                            {{photoTime}}
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    
+                                    
+                                    <div class="row">
+                                        <div class="col-sm-3 col-md-2 col-5">
+                                            <label style="font-weight:bold;">Format</label>
+                                        </div>
+                                        <div class="col-md-8 col-6">
+                                            {{photoFormat}}
+                                        </div>
+                                    </div>
+                                    <hr />
+
+                                </div>
+                                <div class="tab-pane fade" id="connectedServices" role="tabpanel" aria-labelledby="ConnectedServices-tab">
+                                    <div class="row">
+                                      <div class="col-md-8">
+                                        <div #gmap class = "map"></div>
+                                        <div id="floating-panel">
+                                          <input id="address" type="textbox" placeholder="Enter a place" [(ngModel)]="address">
+                                          <input id="submit" type="button" value="Search" (click)="geocodeAddress(geocoder, map)">
+                                        </div>
+                                      </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br>
+
+                    <div class="row">
+                      <div class="col-md-12">
+                        <button type="button" class="btn-save pull-right" id="btnUploadPicture" (click)="onCreate()">Upload</button>
+                      </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

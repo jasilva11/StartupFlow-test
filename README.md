@@ -19,6 +19,7 @@ Si vous voules ajouter une photo, cliquez le bouton "Upload Photo" situé en hau
 Pour tester les services du serveur, vous pouvez utiliser postman avec les urls suivantes:
 
 | URL                  | Type de service      | Action                                                              |
+| -------------------- | -------------------- | ------------------------------------------------------------------- |
 | /api/photo           | GET                  | Retourne la liste de photos.                                        |
 | /api/photo/:photo_id | GET                  | Retourne l'information un format json de la photo correspondente a l'id fourni |
 | /api/photo           | POST                 | Crée une nouvelle photo avec l'information fournie dans le json.    |
