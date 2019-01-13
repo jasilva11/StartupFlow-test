@@ -1,10 +1,10 @@
 # Client
 
-Pour deployer le client ouvrir une fenetre de commands dans le repertoire /client et executer le command ng serve
+Pour deployer le client ouvrir une fenetre de commands dans le repertoire /angular-client et executer les commande "npm i" et  "ng serve"
 
 # Serveur
 
-Pour deployer le clinet ouvirir une fenetre de commands dans la racine du projet et execute le command node app.js
+Pour deployer le clinet ouvirir une fenetre de commands dans la racine du projet et execute les commande "npm i" et "node app.js"
 
 # Utilisation 
 
