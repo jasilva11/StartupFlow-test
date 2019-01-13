@@ -1,0 +1,14 @@
+.img-thumbnail {
+  width:100%;
+  height:184px;
+}
+.justify-content-center {
+    display: flex !important;
+    justify-content: center !important;
+}
+.container {
+  min-height: 500px;
+}
+.album {
+  min-height: 416px;
+}
