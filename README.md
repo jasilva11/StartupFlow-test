@@ -23,5 +23,5 @@ Pour tester les services du serveur, vous pouvez utiliser postman avec les urls 
 | /api/photo           | GET                  | Retourne la liste de photos.                                        |
 | /api/photo/:photo_id | GET                  | Retourne l'information un format json de la photo correspondente a l'id fourni |
 | /api/photo           | POST                 | Crée une nouvelle photo avec l'information fournie dans le json.    |
-| /api/photo/:photo_id | PUT                  | Mets à jour l'information de la photo correspondente a l'id         |
-| /api/photo/:photo_id | DELETE               | Supprime la photo  correspondente a l'id                            |
+| /api/photo/:photo_id | PUT                  | Mets à jour l'information de la photo correspondente a l'id fourni  |
+| /api/photo/:photo_id | DELETE               | Supprime la photo  correspondente a l'id fourni                     |
