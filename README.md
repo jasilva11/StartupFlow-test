@@ -12,7 +12,11 @@ Pour deployer le clinet ouvirir une fenetre de commands dans la racine du projet
 
 Une fois le client et le serveur sont lancés, allez sur le navigateur dans localhost:4200, Là vous trouverez une liste des photos prechrargés. En cliquant sur une des photos vous verez ces details. 
 
-Si vous voules ajouter une photo, cliquez le bouton "Upload Photo" situé en haute de la page à droite. Vouz pouvez telecharger une photo et chercher un lieu (addresse, ville, pays, etc) sur le champ de saise de la carte de google maps, dans l'onglet "Location" du formulaire. Pour telecharger la photo vers le serveur, cliquez le bouton "Upload" situé en bas de la page à gauche.
+Si vous voules ajouter une photo, cliquez le bouton "Upload Photo" situé en haute de la page à droite. Vouz pouvez telecharger une photo et chercher un lieu (addresse, ville, pays, etc) sur le champ de saise de la carte de google maps, dans l'onglet "Location" du formulaire. Si la photo à deja un lieu associé, ce sera affiché sur la carte et peut être modifié si besoin.
+
+Pour telecharger la photo vers le serveur, cliquez sur le bouton "Upload" situé en bas de la page à gauche.
+
+Finalement, une fois la photo est telecharge vous serez redirigé a la page des details de la photo, où vpus trouverez les details disponibles de la photo.
 
 ## Serveur
 

@@ -5,6 +5,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { DatePipe  } from '@angular/common';
 import { ViewChild } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
+declare var EXIF: any;
 import { } from 'googlemaps';
 
 interface FileWithDate extends File {
@@ -31,8 +32,6 @@ export class PhotoCreateComponent implements OnInit {
   public photoTime = '';
   public photoImg = 'http://placehold.it/150x150';
   public address = '';
-  public photoLat: number;
-  public photoLng: number;
 
   @ViewChild('gmap') gmapElement: any;
   map: google.maps.Map;
@@ -64,6 +63,10 @@ export class PhotoCreateComponent implements OnInit {
     return new DatePipe('en-EN').transform(raw, 'HH:mm');
   }
 
+  public toDecimal (number) {
+    return number[0].numerator + number[1].numerator / (60 * number[1].denominator) + number[2].numerator / (3600 * number[2].denominator);
+  }
+
   public onRemoved(file: FileHolder) {
     this.photoTitle = 'Photo title';
     this.photoImg = 'http://placehold.it/750x500';
@@ -74,25 +77,40 @@ export class PhotoCreateComponent implements OnInit {
     const name = file.file.name.split('.');
     name.pop();
     this.photoTitle = name.join();
-    this.photoDate =  new Date(fileWithDate.lastModified);
-    this.photoDateStr = this.formatDate(this.photoDate);
-    this.photoTime = this.formatTime(this.photoDate);
     this.photoFormat = file.file.type;
     this.photoImg = file.src;
+    const obj = this;
+    EXIF.getData(file.file, function() {
+      const metadata = EXIF.getAllTags(this);
+      if (metadata.dateInfo) {
+        const dateInfo = metadata.DateTime.replace(' ', ':').split(':');
+        obj.photoDate =  new Date(parseFloat(dateInfo[0]), parseFloat(dateInfo[1]) - 1, parseFloat(dateInfo[2]),
+          parseFloat(dateInfo[3]), parseFloat(dateInfo[4]), parseFloat(dateInfo[5]));
+        obj.photoDateStr = obj.formatDate(obj.photoDate);
+        obj.photoTime = obj.formatTime(obj.photoDate);
+      }
+      if (metadata.GPSLatitude && metadata.GPSLongitude) {
+        if (obj.marker) { obj.marker.setMap(null); }
+        const latLng = new google.maps.LatLng(obj.toDecimal(metadata.GPSLatitude), obj.toDecimal(metadata.GPSLongitude));
+        obj.marker = new google.maps.Marker({
+          map: obj.map,
+          position: latLng
+        });
+        obj.map.panTo(latLng);
+      }
+    });
   }
 
   public geocodeAddress(geocoder, resultsMap) {
     const obj = this;
     geocoder.geocode({'address': this.address}, function(results, status) {
       if (status === 'OK') {
-        if (this.marker) {this.marker.setMap(null); }
+        if (obj.marker) {obj.marker.setMap(null); }
         resultsMap.setCenter(results[0].geometry.location);
-        this.marker = new google.maps.Marker({
+        obj.marker = new google.maps.Marker({
           map: resultsMap,
           position: results[0].geometry.location
         });
-        obj.photoLat = results[0].geometry.location.lat();
-        obj.photoLng = results[0].geometry.location.lng();
       } else {
         alert('Geocode was not successful for the following reason: ' + status);
       }
@@ -105,7 +123,7 @@ export class PhotoCreateComponent implements OnInit {
       image: this.photoImg,
       title: this.photoTitle,
       format: this.photoFormat,
-      location: {lat: this.photoLat, lng: this.photoLng},
+      location: {lat: this.marker.getPosition().lat(), lng: this.marker.getPosition().lng()},
       date: this.photoDate,
       time: this.photoTime
     };
