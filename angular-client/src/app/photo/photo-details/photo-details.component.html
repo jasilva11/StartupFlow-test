@@ -6,6 +6,8 @@
 
       <div class="col-md-8">
         <img class="img-fluid" src="{{photo.image}}" alt="">
+        <button type="button" class="btn-nav prev" id="btnUploadPicture" *ngIf="prev" (click)="changePhoto(prev)">&lt;PREV</button>
+        <button type="button" class="btn-nav next" id="btnUploadPicture" *ngIf="next" (click)="changePhoto(next)">NEXT&gt;</button>
       </div>
 
       <div class="col-md-4">
@@ -13,9 +15,9 @@
         <div #gmap class = "map"></div>
         <h3 class="my-3">Photo details</h3>
         <ul>
-          <li><b>Date:</b> {{formatedDate}}</li>
-          <li><b>Time:</b> {{photo.time}}</li>
-          <li><b>Format:</b> {{photo.format}}</li>
+          <li><b>Date:</b> {{formatedDate || 'Unkonwn' }}</li>
+          <li><b>Time:</b> {{photo.time || 'Unkonwn' }}</li>
+          <li><b>Format:</b> {{photo.format || 'Unkonwn' }}</li>
         </ul>
       </div>
   </div>

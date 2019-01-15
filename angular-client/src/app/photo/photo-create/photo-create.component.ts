@@ -82,13 +82,6 @@ export class PhotoCreateComponent implements OnInit {
     const obj = this;
     EXIF.getData(file.file, function() {
       const metadata = EXIF.getAllTags(this);
-      if (metadata.dateInfo) {
-        const dateInfo = metadata.DateTime.replace(' ', ':').split(':');
-        obj.photoDate =  new Date(parseFloat(dateInfo[0]), parseFloat(dateInfo[1]) - 1, parseFloat(dateInfo[2]),
-          parseFloat(dateInfo[3]), parseFloat(dateInfo[4]), parseFloat(dateInfo[5]));
-        obj.photoDateStr = obj.formatDate(obj.photoDate);
-        obj.photoTime = obj.formatTime(obj.photoDate);
-      }
       if (metadata.GPSLatitude && metadata.GPSLongitude) {
         if (obj.marker) { obj.marker.setMap(null); }
         const latLng = new google.maps.LatLng(obj.toDecimal(metadata.GPSLatitude), obj.toDecimal(metadata.GPSLongitude));
@@ -98,6 +91,15 @@ export class PhotoCreateComponent implements OnInit {
         });
         obj.map.panTo(latLng);
       }
+      if (metadata.dateInfo) {
+        const dateInfo = metadata.DateTime.replace(' ', ':').split(':');
+        obj.photoDate =  new Date(parseFloat(dateInfo[0]), parseFloat(dateInfo[1]) - 1, parseFloat(dateInfo[2]),
+          parseFloat(dateInfo[3]), parseFloat(dateInfo[4]), parseFloat(dateInfo[5]));
+      } else {
+        obj.photoDate =  new Date((<FileWithDate>file.file).lastModified);
+      }
+      obj.photoDateStr = obj.formatDate(obj.photoDate);
+      obj.photoTime = obj.formatTime(obj.photoDate);
     });
   }
 

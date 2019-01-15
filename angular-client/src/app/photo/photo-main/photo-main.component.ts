@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MainService } from '../../services/main.service';
 import { Router, NavigationEnd } from '@angular/router';
+import { DatePipe } from '@angular/common';
 import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
@@ -23,6 +24,10 @@ export class PhotoMainComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  public formatDate(raw) {
+    return new DatePipe('en-EN').transform(raw, 'dd MMM yyyy');
   }
 
   public getPhotos() {

@@ -6,3 +6,24 @@
   width:100%;
   height:100%;
 }
+.btn-nav {
+  border: none;
+  box-shadow: 2px 2px 4px 0 rgba(148, 148, 148, 0.6);
+  color: #fff;
+  cursor: pointer;
+  position: absolute;
+  top: 0px;
+  float: left;
+  font-size: 1.25em;
+  font-weight: 500;
+  padding: 10px;
+  text-transform: uppercase;
+  background-color: #3c9;
+  box-sizing: border-box;
+}
+.prev {
+  left: 15px
+}
+.next {
+  right: 15px
+}

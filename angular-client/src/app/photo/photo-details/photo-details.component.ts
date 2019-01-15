@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MainService } from '../../services/main.service';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { ViewChild } from '@angular/core';
-import { DatePipe  } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { } from 'googlemaps';
 
@@ -19,6 +19,9 @@ export class PhotoDetailsComponent implements OnInit {
   public photoId: string;
   public photo = {image: '', title: '', date: undefined, time: '', format: '', location: {lat: undefined, lng: undefined}};
   public formatedDate = '';
+  public next: string;
+  public prev: string;
+  public marker: google.maps.Marker;
 
   constructor(
     public mainService: MainService,
@@ -49,18 +52,37 @@ export class PhotoDetailsComponent implements OnInit {
     this.mainService.get('api/photo/' + this.photoId).subscribe(result => {
       if (result._id) {
         this.photo = result;
-        console.log(this.photo);
         this.formatedDate = this.formatDate(this.photo.date);
         if (this.photo.location && this.photo.location.lat) {
           const center = new google.maps.LatLng(this.photo.location.lat, this.photo.location.lng);
-          const marker = new google.maps.Marker({
+          if (this.marker) { this.marker.setMap(null); }
+          this.marker = new google.maps.Marker({
             position: center,
             map: this.map
           });
           this.map.panTo(center);
         }
-        this.spinner.hide();
+        this.mainService.get('api/photo/' + this.photoId + '/prev').subscribe(resultPrev => {
+          if (resultPrev._id) {
+            this.prev = resultPrev._id;
+          }
+          this.mainService.get('api/photo/' + this.photoId + '/next').subscribe(resultNext => {
+            if (resultNext._id) {
+              this.next = resultNext._id;
+            }
+            this.spinner.hide();
+          });
+        });
       }
     });
+  }
+
+  public changePhoto(photo) {
+    this.router.navigate(['/photo/details/' + photo]);
+    this.photoId = photo;
+    this.spinner.show();
+    this.prev = undefined;
+    this.next = undefined;
+    this.getPhoto();
   }
 }
